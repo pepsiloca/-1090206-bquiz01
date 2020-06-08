@@ -1,14 +1,14 @@
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
-                    <p class="t cent botli">進站總人數管理</p>
-                    <form method="post"  action="api/edit_total.php">
+                    <p class="t cent botli">頁尾版權資料管理</p>
+                    <form method="post"  action="api/edit_bottom.php">
                         <table width="100%">
                             <tbody>
                                 <tr class="yel">
-                                    <td width="50%" style="text-align:right">進站總人數：</td>
-                                    <?php $total=new DB('total');
-                                          $tt=$total->find(1);?>
+                                    <td width="50%" style="text-align:right">頁尾版權資料：</td>
+                                    <?php $bottom=new DB('data_info');
+                                          $bt=$bottom->find(1);?>
 
-                                    <td width="50%" style="text-align:left"><input type="text" name="total" value="<?=$tt['total'];?>"></td>
+                                    <td width="50%" style="text-align:left"><input type="text" name="bottom" value="<?=$bt['data_info'];?>"></td>
                                 </tr>
                                 
                             </tbody>
