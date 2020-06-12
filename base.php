@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 //建立一個DB的類別
 
 class DB{
@@ -194,5 +196,17 @@ function q($sql){
 function to($url){
     header("location:".$url);
 }
+
+
+if(empty($_SESSION['visition'])){
+    $total=new DB('total');
+    $tt=$total->find(1);
+    $tt['total']++;
+    $total->save($tt);
+    $_SESSION['visited']=1;
+}
+
+
+
 
 ?>

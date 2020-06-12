@@ -36,33 +36,28 @@
                 <div id="menuput" class="dbor">
                     <!--主選單放此-->
                     <span class="t botli">主選單區</span>
+                    <?php
+                        $menu=new DB("menu");
+                        $mains=$menu->all(['parent'=>0,'sh'=>1]);
+                        foreach($mains as $main){
+                            echo "<div class='mainmu'>";
+                                echo "<a href='".$main['href']."'>";
+                                echo $main['name'];
+                                echo "</a>";
 
-                    <?php   //按鍵底圖
-                    $menu=new DB("menu");
-                    $mains=$menu->all(['parent'=>0, 'sh'=>1]);
-                    foreach($mains as $main){
-                        echo "<div class='mainmu'>";
-                            echo "<a href='".$main['href']."'>";
-                            echo $main['name'];
-                            echo "</a>";
+                                $chksub=$menu->count(['parent'=>$main['id']]);
+                                if($chksub>0){
+                                    $subs=$menu->all(['parent'=>$main['id']]);
+                                    echo "<div class='mw'>";
+                                    foreach($subs as $sub){
+                                            echo "<div class='mainmu2'><a href='".$sub['href']."'>".$sub['name']."</a></div>";
+                                        }
+                                    echo "</div>";
+                                }
+                            echo "</div>";
+                        }
 
-                            $chksub=$menu->count(['parent'=>$main['id']]);
-                            if($chksub>0){
-                                $subs=$menu->all(['parent'=>$main['id']]);
-                                echo "<div class='mw'>";
-                                foreach($subs as $sub){
-                                        echo "<div class='mainmu2'><a href='".$sub['href']."'>".$sub['name']."</a></div>";
-                                    }
-                                echo "</div>";
-                            }
-                        echo "</div>";
-                    }
-
-                    
                     ?>
-
-
-
                 </div>
                 <div class="dbor" style="margin:3px; width:95%; height:20%; line-height:100px;">
                     <span class="t">進站總人數 :<?php
@@ -83,65 +78,50 @@
 				}
 			
 			?>
-            <div id="alt"
-                style="position: absolute; width: 350px; min-height: 100px; word-break:break-all; text-align:justify;  background-color: rgb(255, 255, 204); top: 50px; left: 400px; z-index: 99; display: none; padding: 5px; border: 3px double rgb(255, 153, 0); background-position: initial initial; background-repeat: initial initial;">
-            </div>
-            <script>
-            $(".sswww").hover(
-                function() {
-                    $("#alt").html("" + $(this).children(".all").html() + "").css({
-                        "top": $(this).offset().top - 50
-                    })
-                    $("#alt").show()
-                }
-            )
-            $(".sswww").mouseout(
-                function() {
-                    $("#alt").hide()
-                }
-            )
-            </script>
+
             <div class="di di ad" style="height:540px; width:23%; padding:0px; margin-left:22px; float:left; ">
                 <!--右邊-->
+                <?php
+                
+                if(empty($_SESSION['login'])){
+                ?>
                 <button style="width:100%; margin-left:auto; margin-right:auto; margin-top:2px; height:50px;"
-                    onclick="lo(&#39;?do=admin&#39;)">管理登入</button>
+                    onclick="lo(&#39;?do=login&#39;)">管理登入</button>
+                <?php
+                }else{
+                ?>
+                <button style="width:100%; margin-left:auto; margin-right:auto; margin-top:2px; height:50px;"
+                    onclick="lo(&#39;admin.php&#39;)">返回管理</button>
+                <?php
+                }
+                ?>
+
                 <div style="width:89%; height:480px;" class="dbor">
                     <span class="t botli">校園映象區</span>
-                    <div style="text-align:center;margin:10px;" onclick="pp(1)"><img src="icon/up.jpg" alt=""></div>
-
+                    <div style="text-align:center;margin:10px" onclick="pp(1)"><img src="icon/up.jpg" alt=""></div>
                     <?php
                         $image=new DB("image");
 
-                        $ims=$image->all(['sh=>1']);
-                        foreach($ims as $key=> $im){
-                            echo "<div style='text-align:cneter;margin:3px' id='ssaa$key' class='im'>";
-                            echo "<img src='img/".$im['img']."' style='width:150px;height:103px; border:3px solid orange'>";
+                        $ims=$image->all(['sh'=>1]);
+                        foreach($ims as $key => $im){
+                            echo "<div style='text-align:center;margin:3px' id='ssaa$key' class='im'>";
+                            echo "<img src='img/".$im['img']."' style='width:150px;height:103px;border:3px solid orange'>";
                             echo "</div>";
                         }
-                    
-                    
-                    
                     ?>
 
-
-                    <div style="text-align:center;margin:10px;" onclick="pp(2)"><img src="icon/dn.jpg" alt=""></div>
-
-
-
+                   <div style="text-align:center;margin:10px" onclick="pp(2)"><img src="icon/dn.jpg" alt=""></div>
                     <script>
-                    var nowpage = 0, //現在的頁面
+                    var nowpage = 0, //現在的頁數
                         num = <?=$image->count(['sh'=>1]);?>;  //圖片的數量
-
                     function pp(x) {
                         var s, t;
                         if (x == 1 && nowpage - 1 >= 0) {
                             nowpage--;
                         }
-                        if (x == 2 && (nowpage + 1) <= num - 3) {
+                         if (x == 2 && nowpage + 1  <= num - 3) {
                             nowpage++;
                         }
-
-                        //跑完後  .im先隱藏
 
                         $(".im").hide()
                         for (s = 0; s <= 2; s++) {

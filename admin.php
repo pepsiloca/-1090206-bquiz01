@@ -1,4 +1,18 @@
-﻿﻿<?php include_once "base.php";?>
+﻿﻿<?php
+include_once "base.php";
+
+if(empty($_SESSION['login'])){
+?>
+    <script>
+        alert('非法登入，請重新登入');
+        location.href='index.php?do=login'
+    </script>
+<?php
+}
+
+?>
+
+
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0068)?do=admin&redo=title -->
