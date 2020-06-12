@@ -198,6 +198,16 @@ function to($url){
 }
 
 
+//老師新增的方式  參考 考試時不使用
+// $Title=new DB('title');
+// $Ad=new DB('ad');
+// $Mvim=new DB('mvim');
+// $Image=new DB('image');
+// $Total=new DB('total');
+// $News=new DB('news');
+// $Admin=new DB('admin');
+// $Menu=new DB('menu');
+
 if(empty($_SESSION['visition'])){
     $total=new DB('total');
     $tt=$total->find(1);
